@@ -2,9 +2,11 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isProtectedRoute = createRouteMatcher(["/orders", "/cart"]);
 
-export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) {
-    auth().protect();
+// With @clerk/nextjs v6, auth() is async and returns a SessionAuthWithRedirect
+export default clerkMiddleware(async (auth, req) => {
+  const session = await auth();
+  if (isProtectedRoute(req) && !session.userId) {
+    return session.redirectToSignIn();
   }
 });
 
