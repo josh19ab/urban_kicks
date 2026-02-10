@@ -57,9 +57,15 @@ function explore() {
   const getLatestProducts_ = async () => {
     try {
       const resp = await GlobalApi.getLatestProducts();
-      const data = resp.data.data;
+      // Defensive: filter out any null/invalid items from API
+      const rawData = resp?.data?.data || [];
+      const data = rawData.filter(
+        (item) => item && item.attributes
+      );
+
       setProductList(data);
       setFilteredList(data);
+
       const sneakers = data.filter(
         (item) => item.attributes.category === "sneakers"
       );
@@ -99,9 +105,10 @@ function explore() {
   useEffect(() => {
     let updatedList = [...productList];
 
-    // Category filter
+    // Category filter (defensive: skip items without attributes)
     if (selectedCategories.length > 0) {
       updatedList = updatedList.filter((item) =>
+        item?.attributes &&
         selectedCategories.includes(item.attributes.category)
       );
     }
@@ -109,6 +116,7 @@ function explore() {
     // Availability filter
     if (selectedAvailability.length > 0) {
       updatedList = updatedList.filter((item) => {
+        if (!item?.attributes) return false;
         if (selectedAvailability.includes("available")) {
           return item.attributes.productAvailibility === true;
         } else if (selectedAvailability.includes("sold")) {
@@ -124,7 +132,7 @@ function explore() {
       const max = parseFloat(maxPrice);
 
       updatedList = updatedList.filter((item) => {
-        const price = parseFloat(item.attributes.pricing);
+        const price = parseFloat(item?.attributes?.pricing);
         if (!isNaN(min) && !isNaN(max)) {
           return price >= min && price <= max;
         } else if (!isNaN(min)) {
@@ -138,17 +146,19 @@ function explore() {
 
     // Sort
     updatedList.sort((a, b) => {
+      const aAttrs = a?.attributes || {};
+      const bAttrs = b?.attributes || {};
       if (sortOption === "titleASC") {
-        return a.attributes.title.localeCompare(b.attributes.title);
+        return (aAttrs.title || "").localeCompare(bAttrs.title || "");
       } else if (sortOption === "titleDESC") {
-        return b.attributes.title.localeCompare(a.attributes.title);
+        return (bAttrs.title || "").localeCompare(aAttrs.title || "");
       } else if (sortOption === "priceASC") {
         return (
-          parseFloat(a.attributes.pricing) - parseFloat(b.attributes.pricing)
+          parseFloat(aAttrs.pricing) - parseFloat(bAttrs.pricing)
         );
       } else if (sortOption === "priceDESC") {
         return (
-          parseFloat(b.attributes.pricing) - parseFloat(a.attributes.pricing)
+          parseFloat(bAttrs.pricing) - parseFloat(aAttrs.pricing)
         );
       }
       return 0;
