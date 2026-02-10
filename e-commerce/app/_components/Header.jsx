@@ -72,7 +72,7 @@ function Header() {
             <div className="md:flex md:items-center md:gap-12">
               <nav
                 aria-label="Global"
-                className={`absolute right-3 z-10 bg-gray-50 border border-darkAccent md:border-none
+                className={`absolute right-3 z-10 border border-darkAccent md:border-none
                   md:text-light    shadow-md md:static md:block md:p-0 md:shadow-none px-10 py-10  md:mt-0 mt-14 rounded-md ${
                     isMenuOpen
                       ? "animate-slide-in-right block"
@@ -82,7 +82,7 @@ function Header() {
                 <ul className="flex flex-col items-start gap-4 text-md md:flex-row md:items-center md:gap-6 dark:text-dark">
                   <li>
                     <a
-                      className="text-gray-500 transition hover:text-gray-500/75"
+                      className="transition text-gray-700 hover:text-gray-900"
                       href="/"
                     >
                       Home
@@ -91,7 +91,7 @@ function Header() {
 
                   <li>
                     <a
-                      className="text-gray-500 transition hover:text-gray-500/75"
+                      className="transition text-gray-700 hover:text-gray-900"
                       href="/explore"
                     >
                       Explore
@@ -100,7 +100,7 @@ function Header() {
 
                   <li>
                     <a
-                      className="text-gray-500 transition hover:text-gray-500/75"
+                      className="transition text-gray-700 hover:text-gray-900"
                       href="/cart"
                     >
                       Cart
@@ -109,7 +109,7 @@ function Header() {
 
                   <li>
                     <a
-                      className="text-gray-500 transition hover:text-gray-500/75"
+                      className="transition text-gray-700 hover:text-gray-900"
                       href="/orders"
                     >
                       Orders

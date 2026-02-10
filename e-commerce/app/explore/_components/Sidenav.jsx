@@ -1,6 +1,9 @@
-import { IndianRupee, X } from "lucide-react";
-import { useState } from "react";
+import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
+import PriceRangeSlider, {
+  PRICE_MIN,
+  PRICE_MAX,
+} from "./PriceRangeSlider";
 
 const Sidenav = ({
   isOpen,
@@ -166,16 +169,15 @@ const Sidenav = ({
                 <div className="bg-white">
                   <header className="flex items-center justify-between p-3 border-t">
                     <span className="text-sm text-gray-700">
-                      {minPrice && maxPrice
-                        ? `₹${minPrice} - ₹${maxPrice}`
-                        : "Set price range"}
+                      ₹{Number(minPrice).toLocaleString("en-IN")} – ₹
+                      {Number(maxPrice).toLocaleString("en-IN")}
                     </span>
                     <button
                       type="button"
                       className="text-sm text-gray-900 hover:text-quaternary"
                       onClick={() => {
-                        setMinPrice("");
-                        setMaxPrice("");
+                        setMinPrice(PRICE_MIN);
+                        setMaxPrice(PRICE_MAX);
                       }}
                     >
                       Reset
@@ -183,41 +185,13 @@ const Sidenav = ({
                   </header>
 
                   <div className="p-3 border-t">
-                    <div className="flex justify-between gap-3">
-                      <label
-                        htmlFor="MobileFilterPriceFrom"
-                        className="flex items-center gap-2 flex-1"
-                      >
-                        <span className="text-sm text-gray-600">
-                          <IndianRupee className="w-4 h-4" />
-                        </span>
-                        <input
-                          type="number"
-                          id="MobileFilterPriceFrom"
-                          placeholder="From"
-                          value={minPrice}
-                          onChange={(e) => setMinPrice(e.target.value)}
-                          className="w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2"
-                        />
-                      </label>
-
-                      <label
-                        htmlFor="MobileFilterPriceTo"
-                        className="flex items-center gap-2 flex-1"
-                      >
-                        <span className="text-sm text-gray-600">
-                          <IndianRupee className="w-4 h-4" />
-                        </span>
-                        <input
-                          type="number"
-                          id="MobileFilterPriceTo"
-                          placeholder="To"
-                          value={maxPrice}
-                          onChange={(e) => setMaxPrice(e.target.value)}
-                          className="w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2"
-                        />
-                      </label>
-                    </div>
+                    <PriceRangeSlider
+                      minPrice={minPrice}
+                      maxPrice={maxPrice}
+                      onMinChange={setMinPrice}
+                      onMaxChange={setMaxPrice}
+                      idPrefix="MobileFilterPrice"
+                    />
                   </div>
                 </div>
               </details>
@@ -261,7 +235,6 @@ const Sidenav = ({
                   <ul className="space-y-2 p-3 border-t">
                     {[
                       { value: "available", label: "Available" },
-                      { value: "sold", label: "Sold Out" },
                     ].map((option) => (
                       <li key={option.value}>
                         <label

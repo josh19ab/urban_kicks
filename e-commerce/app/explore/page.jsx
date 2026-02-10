@@ -10,6 +10,10 @@ import GlobalApi from "../_utils/GlobalApi";
 import ProductItem from "../_components/ProductItem";
 import LoadingEffect from "../_components/LoadingEffect";
 import Sidenav from "./_components/Sidenav";
+import PriceRangeSlider, {
+  PRICE_MIN,
+  PRICE_MAX,
+} from "./_components/PriceRangeSlider";
 
 function explore() {
   const path = usePathname();
@@ -22,28 +26,19 @@ function explore() {
   const [filteredList, setFilteredList] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedAvailability, setSelectedAvailability] = useState([]);
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [minPrice, setMinPrice] = useState(PRICE_MIN);
+  const [maxPrice, setMaxPrice] = useState(PRICE_MAX);
   const [isSidenavOpen, setSidenavOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState([]);
 
-  // Updated categories for thrift store
-  const categories = [
-    "sneakers",
-    "boots",
-    "flip-flops",
-    "tshirts",
-    "jeans",
-    "dresses",
-    "jackets",
-    "accessories",
-  ];
+  // Categories for thrift store (match Strapi enums)
+  const categories = ["Clothing", "Footwear", "Accessories"];
 
   // Category groups for better organization
   const categoryGroups = {
-    footwear: ["sneakers", "boots", "flip-flops"],
-    clothing: ["tshirts", "jeans", "dresses", "jackets"],
-    accessories: ["accessories"],
+    clothing: ["Clothing"],
+    footwear: ["Footwear"],
+    accessories: ["Accessories"],
   };
 
   const toggleSidenav = () => {
@@ -119,28 +114,18 @@ function explore() {
         if (!item?.attributes) return false;
         if (selectedAvailability.includes("available")) {
           return item.attributes.productAvailibility === true;
-        } else if (selectedAvailability.includes("sold")) {
-          return item.attributes.productAvailibility === false;
         }
         return true;
       });
     }
 
-    // Price filter
-    if (minPrice || maxPrice) {
-      const min = parseFloat(minPrice);
-      const max = parseFloat(maxPrice);
-
+    // Price filter (min/max are numbers, default 0 and 10000)
+    const min = Number(minPrice);
+    const max = Number(maxPrice);
+    if (!isNaN(min) && !isNaN(max)) {
       updatedList = updatedList.filter((item) => {
         const price = parseFloat(item?.attributes?.pricing);
-        if (!isNaN(min) && !isNaN(max)) {
-          return price >= min && price <= max;
-        } else if (!isNaN(min)) {
-          return price >= min;
-        } else if (!isNaN(max)) {
-          return price <= max;
-        }
-        return true;
+        return price >= min && price <= max;
       });
     }
 
@@ -174,8 +159,13 @@ function explore() {
     if (selectedAvailability.length > 0) {
       active.push(`Availability: ${selectedAvailability.join(", ")}`);
     }
-    if (minPrice || maxPrice) {
-      active.push(`Price: ₹${minPrice || "0"} - ₹${maxPrice || "∞"}`);
+    if (
+      minPrice !== PRICE_MIN ||
+      maxPrice !== PRICE_MAX
+    ) {
+      active.push(
+        `Price: ₹${minPrice.toLocaleString("en-IN")} - ₹${maxPrice.toLocaleString("en-IN")}`
+      );
     }
     setActiveFilters(active);
   }, [
@@ -190,8 +180,8 @@ function explore() {
   const clearAllFilters = () => {
     setSelectedCategories([]);
     setSelectedAvailability([]);
-    setMinPrice("");
-    setMaxPrice("");
+    setMinPrice(PRICE_MIN);
+    setMaxPrice(PRICE_MAX);
     setSortOption("titleASC");
     setFilteredList(productList);
     setActiveFilters([]);
@@ -204,8 +194,8 @@ function explore() {
     } else if (filter.startsWith("Availability:")) {
       setSelectedAvailability([]);
     } else if (filter.startsWith("Price:")) {
-      setMinPrice("");
-      setMaxPrice("");
+      setMinPrice(PRICE_MIN);
+      setMaxPrice(PRICE_MAX);
     }
   };
 
@@ -420,16 +410,15 @@ function explore() {
                   <div className="border-t border-gray-200 bg-white">
                     <header className="flex items-center justify-between p-4">
                       <span className="text-sm text-gray-700">
-                        {minPrice && maxPrice
-                          ? `₹${minPrice} - ₹${maxPrice}`
-                          : "Set price range"}
+                        ₹{minPrice.toLocaleString("en-IN")} – ₹
+                        {maxPrice.toLocaleString("en-IN")}
                       </span>
                       <button
                         type="button"
-                        className="text-sm text-gray-900"
+                        className="text-sm text-gray-900 hover:text-quaternary"
                         onClick={() => {
-                          setMinPrice("");
-                          setMaxPrice("");
+                          setMinPrice(PRICE_MIN);
+                          setMaxPrice(PRICE_MAX);
                         }}
                       >
                         Reset
@@ -437,41 +426,13 @@ function explore() {
                     </header>
 
                     <div className="border-t border-gray-200 p-4">
-                      <div className="flex justify-between gap-4">
-                        <label
-                          htmlFor="FilterPriceFrom"
-                          className="flex items-center gap-2"
-                        >
-                          <span className="text-sm text-gray-600">
-                            <IndianRupee className="w-4 h-4" />
-                          </span>
-                          <input
-                            type="number"
-                            id="FilterPriceFrom"
-                            placeholder="From"
-                            value={minPrice}
-                            onChange={(e) => setMinPrice(e.target.value)}
-                            className="w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
-                          />
-                        </label>
-
-                        <label
-                          htmlFor="FilterPriceTo"
-                          className="flex items-center gap-2"
-                        >
-                          <span className="text-sm text-gray-600">
-                            <IndianRupee className="w-4 h-4" />
-                          </span>
-                          <input
-                            type="number"
-                            id="FilterPriceTo"
-                            placeholder="To"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                            className="w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
-                          />
-                        </label>
-                      </div>
+                      <PriceRangeSlider
+                        minPrice={minPrice}
+                        maxPrice={maxPrice}
+                        onMinChange={setMinPrice}
+                        onMaxChange={setMaxPrice}
+                        idPrefix="FilterPrice"
+                      />
                     </div>
                   </div>
                 </details>
@@ -515,7 +476,6 @@ function explore() {
                     <ul className="space-y-1 border-t border-gray-200 p-4">
                       {[
                         { value: "available", label: "Available" },
-                        { value: "sold", label: "Sold Out" },
                       ].map((option) => (
                         <li key={option.value}>
                           <label
