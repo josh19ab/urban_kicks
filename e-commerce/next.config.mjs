@@ -1,15 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@clerk/nextjs'],
-  },
-  // Hide the Next.js dev indicator (bottom-left "N" logo) in development
-  devIndicators: {
-    buildActivity: false,
-  },
+  serverExternalPackages: ["@clerk/nextjs"],
 };
 
 export default nextConfig;
