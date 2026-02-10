@@ -1,10 +1,9 @@
-'use client'
+"use client";
 import { SignUp } from "@clerk/nextjs";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Page() {
-  
   return (
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -18,19 +17,16 @@ export default function Page() {
           <div className="hidden lg:relative lg:block lg:p-12">
             <a className="block text-white" href="#">
               <span className="sr-only">Home</span>
-              <Image src="/logo.svg"
-                  alt="logo" 
-                  width={80}
-                  height={80}/>
+              <Image src="/logo.svg" alt="logo" width={80} height={80} />
             </a>
 
             <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-              Urban Kicks
+              THEFT
             </h2>
 
             <p className="mt-4 leading-relaxed text-white/90">
-            Elevate Your Look with Our Curated Collection! <br/>
-            Kickstart Your Day with Our Fresh Local Picks
+              Sustainable Fashion Awaits! <br />
+              Discover Unique Thrift Finds
             </p>
           </div>
         </section>

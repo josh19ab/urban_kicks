@@ -14,7 +14,13 @@ import {
 import { IndianRupee } from "lucide-react";
 import * as React from "react";
 
-export const EmailTemplate = ({ firstName, email, products, amount }) => {
+export const EmailTemplate = ({
+  firstName,
+  email,
+  products,
+  amount,
+  appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://theft.vercel.app",
+}) => {
   // Ensure amount is a number and format it
   const formattedAmount =
     typeof amount === "number"
@@ -26,6 +32,8 @@ export const EmailTemplate = ({ firstName, email, products, amount }) => {
       <Head>
         <style>
           {`
+            @import url('https://fonts.googleapis.com/css2?family=Passero+One&display=swap');
+            
             body {
               font-family: Arial, sans-serif;
               margin: 0;
@@ -101,21 +109,29 @@ export const EmailTemplate = ({ firstName, email, products, amount }) => {
             .button:hover {
                 background-color: #0056b3; 
             }
+            
+            .passero-one {
+              font-family: "Passero One", sans-serif;
+              font-weight: 400;
+              font-style: normal;
+            }
           `}
         </style>
       </Head>
-      <Preview>Your order receipt from our e-commerce store</Preview>
+      <Preview>
+        Your order receipt from THEFT - Sustainable Fashion Store
+      </Preview>
       <Body>
         <Container className="container">
           <Section className="header">
-            <h1>UrbanKicks</h1>
-            <p>Thank you for your purchase, {firstName}!</p>
+            <h1 className="passero-one">THEFT</h1>
+            <p>Thank you for your sustainable fashion purchase, {firstName}!</p>
           </Section>
           <Section>
             <Text>
               <strong>Email:</strong> {email}
             </Text>
-            <Text>Here are the details of your order:</Text>
+            <Text>Here are the details of your thrift order:</Text>
           </Section>
           <Section>
             <table className="product-list">
@@ -162,9 +178,12 @@ export const EmailTemplate = ({ firstName, email, products, amount }) => {
             </Text>
           </Section>
           <Section className="footer">
-            <Text>Thank You For Shopping From UrbanKicks.</Text>
-            <Button href="https://urbankicks.vercel.app" className="button">
-              Continue Shopping
+            <Text>
+              Thank You For Choosing Sustainable Fashion with{" "}
+              <span className="passero-one">THEFT</span>.
+            </Text>
+            <Button href={appUrl} className="button">
+              Continue Thrift Shopping
             </Button>
             <Text>If you have any questions, feel free to contact us.</Text>
           </Section>

@@ -1,36 +1,37 @@
 {
-  "name": "backend",
-  "private": true,
+  "name": "theft-backend",
   "version": "0.1.0",
-  "description": "A Strapi application",
+  "private": true,
+  "description": "THEFT - A thrift store CMS for fashion needs",
+  "license": "MIT",
+  "author": {
+    "name": "THEFT Team"
+  },
   "scripts": {
+    "build": "node --max-old-space-size=4096 ./node_modules/@strapi/strapi/bin/strapi.js build",
+    "deploy": "strapi deploy",
     "develop": "strapi develop",
     "start": "strapi start",
-    "build": "strapi build",
-    "strapi": "strapi",
-    "deploy": "strapi deploy"
+    "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "4.25.3",
-    "@strapi/plugin-i18n": "4.25.3",
-    "@strapi/plugin-users-permissions": "4.25.3",
-    "@strapi/provider-upload-cloudinary": "^4.25.3",
-    "@strapi/strapi": "4.25.3",
+    "@strapi/plugin-cloud": "5.35.0",
+    "@strapi/plugin-users-permissions": "5.35.0",
+    "@strapi/provider-upload-cloudinary": "^5.0.0",
+    "@strapi/strapi": "5.35.0",
     "pg": "8.8.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "5.3.4",
-    "styled-components": "5.3.3"
-  },
-  "author": {
-    "name": "Joshua Abraham"
-  },
-  "strapi": {
-    "uuid": "c4519751-9d52-4318-900f-cf39757e6cf8"
+    "react-redux": "^9.0.0",
+    "react-router-dom": "^6.0.0",
+    "sharp": "^0.34.3",
+    "styled-components": "^6.0.0"
   },
   "engines": {
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "strapi": {
+    "uuid": "c4519751-9d52-4318-900f-cf39757e6cf8"
+  }
 }

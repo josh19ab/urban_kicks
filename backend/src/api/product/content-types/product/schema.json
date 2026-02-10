@@ -30,8 +30,10 @@
     "pricing": {
       "type": "decimal"
     },
-    "instantDelivery": {
-      "type": "boolean"
+    "productAvailibility": {
+      "type": "boolean",
+      "default": true,
+      "required": true
     },
     "files": {
       "type": "media",
@@ -47,10 +49,9 @@
     "category": {
       "type": "enumeration",
       "enum": [
-        "sneakers",
-        "boots",
-        "flip-flops",
-        "tshirts"
+        "Clothing",
+        "Accessories",
+        "Footwear"
       ]
     },
     "whatsIncluded": {
@@ -70,6 +71,9 @@
       "relation": "manyToMany",
       "target": "api::comment.comment",
       "mappedBy": "products"
+    },
+    "Size": {
+      "type": "string"
     }
   }
 }

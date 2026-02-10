@@ -2,8 +2,12 @@ import React from "react";
 
 function LoadingEffect() {
   return (
-    <div className="flex justify-around w-full" >
-      <svg className="w-[200px] h-[200px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <div className="flex justify-around w-full">
+      <svg
+        className="w-[200px] h-[200px]"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 200 200"
+      >
         <radialGradient
           id="a12"
           cx=".66"
@@ -12,20 +16,20 @@ function LoadingEffect() {
           fy=".3125"
           gradientTransform="scale(1.5)"
         >
-          <stop offset="0" stop-color="#B1DFFA"></stop>
-          <stop offset=".3" stop-color="#B1DFFA" stop-opacity=".9"></stop>
-          <stop offset=".6" stop-color="#B1DFFA" stop-opacity=".6"></stop>
-          <stop offset=".8" stop-color="#B1DFFA" stop-opacity=".3"></stop>
-          <stop offset="1" stop-color="#B1DFFA" stop-opacity="0"></stop>
+          <stop offset="0" stopColor="#B1DFFA"></stop>
+          <stop offset=".3" stopColor="#B1DFFA" stopOpacity=".9"></stop>
+          <stop offset=".6" stopColor="#B1DFFA" stopOpacity=".6"></stop>
+          <stop offset=".8" stopColor="#B1DFFA" stopOpacity=".3"></stop>
+          <stop offset="1" stopColor="#B1DFFA" stopOpacity="0"></stop>
         </radialGradient>
         <circle
-          transform-origin="center"
+          transformOrigin="center"
           fill="none"
           stroke="url(#a12)"
-          stroke-width="15"
-          stroke-linecap="round"
-          stroke-dasharray="200 1000"
-          stroke-dashoffset="0"
+          strokeWidth="15"
+          strokeLinecap="round"
+          strokeDasharray="200 1000"
+          strokeDashoffset="0"
           cx="100"
           cy="100"
           r="70"
@@ -42,12 +46,12 @@ function LoadingEffect() {
           ></animateTransform>
         </circle>
         <circle
-          transform-origin="center"
+          transformOrigin="center"
           fill="none"
           opacity=".2"
           stroke="#B1DFFA"
-          stroke-width="15"
-          stroke-linecap="round"
+          strokeWidth="15"
+          strokeLinecap="round"
           cx="100"
           cy="100"
           r="70"

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Passero One Font */
+.passero-one-regular {
+  font-family: "Passero One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 /* Default color variables */
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -12,9 +19,9 @@
 /* Dark mode preferences */
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255; 
-    --background-start-rgb: 27, 38, 44; 
-    --background-end-rgb: 27, 38, 44; 
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 27, 38, 44;
+    --background-end-rgb: 27, 38, 44;
   }
 }
 
@@ -36,26 +43,29 @@ body.dark {
 }
 
 body.dark .bg-gray-50 {
-  background-color: rgb(27, 38, 44); 
+  background-color: rgb(27, 38, 44);
 }
 body.dark .bg-gray-100 {
-  background-color:#2b6b95; 
+  background-color: #2b6b95;
 }
 
 body.dark .bg-gray-700 {
-  background-color:rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
 }
 
-
-body.dark #itemBody {
-  background-color: #3282B8; 
+body.dark #itemMainBody {
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.4);
+  }
 }
 
 body.dark .text-gray-100 {
-  color:  rgb(27, 38, 44); /* Light text color */
+  color: rgb(27, 38, 44); /* Light text color */
 }
 body.dark .text-gray-700 {
-  color:  rgb(27, 38, 44); /* Light text color */
+  color: rgb(27, 38, 44); /* Light text color */
 }
 
 body.dark .text-gray-900 {
@@ -63,26 +73,28 @@ body.dark .text-gray-900 {
 }
 
 body.dark .text-gray-700 {
-  color: rgb(255, 255, 255);/* Light text color for paragraphs (#BBE1FA) */
+  color: rgb(255, 255, 255); /* Light text color for paragraphs (#BBE1FA) */
 }
 
 body.dark .text-dark {
-  color: rgb(255, 255, 255);/* Light text color for paragraphs (#BBE1FA) */
+  color: rgb(255, 255, 255); /* Light text color for paragraphs (#BBE1FA) */
 }
 
 body.dark .bg-primary {
   background-color: rgb(50, 130, 184); /* Dark button background (#3282B8) */
 }
 
-
-
-body.dark header{
-  background-color: rgb(27, 38, 44); 
+body.dark header {
+  background-color: rgb(27, 38, 44);
   color: rgb(255, 255, 255);
 }
 
 body.dark footer {
-  background-color: rgb(27, 38, 44); /* Dark header/footer background (#1B262C) */
+  background-color: rgb(
+    27,
+    38,
+    44
+  ); /* Dark header/footer background (#1B262C) */
   color: rgb(255, 255, 255); /* Light text */
 }
 
@@ -90,26 +102,25 @@ body.dark #breadcrumb {
   color: rgb(255, 255, 255); /* Light text */
 }
 
-
-body.dark .text-gray-500{
+body.dark .text-gray-500 {
   color: rgb(255, 255, 255);
-} 
+}
 
-
-  
 /* Ensure the table is responsive */
 table {
   width: 100%; /* Make the table take full width */
   border-collapse: collapse; /* Remove gaps between cells */
 }
 
-th, td {
+th,
+td {
   text-align: left; /* Align text to the left */
   padding: 8px; /* Add padding for better spacing */
 }
 
 @media (max-width: 768px) {
-  th, td {
+  th,
+  td {
     display: block; /* Stack cells vertically */
     width: 100%; /* Make each cell take full width */
   }

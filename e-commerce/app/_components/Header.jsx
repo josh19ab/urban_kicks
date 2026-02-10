@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext, useEffect, useState } from "react";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { ShoppingCart } from "lucide-react";
@@ -15,7 +17,9 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const path = usePathname();
 
-  const hideHeader = path === "/sign-in" || path === "/sign-up";
+  // Hide header for all sign-in and sign-up routes
+  const hideHeader =
+    path?.startsWith("/sign-in") || path?.startsWith("/sign-up");
 
   useEffect(() => {
     if (user) {
@@ -56,10 +60,10 @@ function Header() {
             <div className="flex-1 md:flex md:items-center md:gap-12">
               <a href="/">
                 <Image
-                  src="/logo.svg"
+                  src="/logo.png"
                   alt="logo"
-                  width={60}
-                  height={40}
+                  width={150}
+                  height={150}
                   id="logo"
                 />
               </a>
@@ -102,6 +106,7 @@ function Header() {
                       Cart
                     </a>
                   </li>
+
                   <li>
                     <a
                       className="text-gray-500 transition hover:text-gray-500/75"
@@ -114,60 +119,63 @@ function Header() {
               </nav>
 
               <div className="flex items-center gap-4">
-                <DarkMode />
-                {!user ? (
-                  <div className="sm:flex sm:gap-4">
-                    <a
-                      className="block rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-darkAccent"
-                      href="/sign-in"
-                    >
-                      Login
-                    </a>
-                    <a
-                      className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-primary transition hover:text-darkAccent sm:block"
-                      href="/sign-up"
-                    >
-                      Register
-                    </a>
-                  </div>
-                ) : (
-                  <div className="flex gap-3 items-center">
-                    <h2
-                      className="flex gap-1 items-center cursor-pointer text-gray-900 "
+                <div className="sm:flex sm:gap-4">
+                  <div className="flex items-center gap-4">
+                    <button
                       onClick={toggleCart}
+                      className="relative p-2 text-gray-600 transition hover:text-gray-600/75"
                     >
-                      <ShoppingCart />({cart ? cart.length : 0})
-                    </h2>
-                    <UserButton />
+                      <ShoppingCart className="h-6 w-6" />
+                      {cart.length > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          {cart.length}
+                        </span>
+                      )}
+                    </button>
+
+                    <DarkMode />
+
+                    {!user ? (
+                      <div className="sm:flex sm:gap-4">
+                        <a
+                          className="block rounded-md bg-quaternary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-quaternary/80"
+                          href="/sign-in"
+                        >
+                          Sign In
+                        </a>
+                        <a
+                          className="hidden rounded-md border-2 border-quaternary px-5 py-2.5 text-sm font-medium text-quaternary transition hover:text-quaternary/80 sm:block"
+                          href="/sign-up"
+                        >
+                          Sign Up
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="flex gap-3 items-center">
+                        <UserButton afterSignOutUrl="/" />
+                      </div>
+                    )}
                   </div>
-                )}
-                {openCart && <Cart />}
+                </div>
+
                 <div className="block md:hidden">
                   <button
-                    className="rounded bg-gray-100 p-2 text-gray-900  transition hover:bg-gray-200 "
+                    className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
                     onClick={toggleMenu}
                   >
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5"
                       fill="none"
-                      viewBox="0 0 24 24"
                       stroke="currentColor"
-                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      {isMenuOpen ? (
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      ) : (
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4 6h16M4 12h16M4 18h16"
-                        />
-                      )}
+                      <path
+                        d="M4 6h16M4 12h16M4 18h16"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -176,6 +184,8 @@ function Header() {
           </div>
         </div>
       </header>
+
+      {openCart && <Cart />}
     </div>
   );
 }

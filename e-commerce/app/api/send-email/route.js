@@ -12,10 +12,11 @@ export async function POST(req) {
     
     // Ensure EmailTemplate returns a valid HTML string
     const emailContent = EmailTemplate({
-      firstName: userName, // Assuming userName is passed as firstName
+      firstName: userName,
       email: email,
-      products: products, // Include products in the template
+      products: products,
       amount: amount,
+      appUrl: process.env.NEXT_PUBLIC_APP_URL,
     });
 
     const { data, error } = await resend.emails.send({

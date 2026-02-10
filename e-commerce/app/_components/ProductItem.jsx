@@ -6,7 +6,7 @@ import React from "react";
 function ProductItem({ product }) {
   return (
     <Link href={'/product-details/'+product.id}>
-      <div className="hover:drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] transition-all duration-300 ease-in-out p-1 rounded-lg ">
+      <div className="hover:drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] transition-all duration-300 ease-in-out p-1 rounded-lg " id="itemMainBody">
         <Image
           src={product?.attributes?.banner?.data.attributes?.url}
           alt="banner"
@@ -20,7 +20,7 @@ function ProductItem({ product }) {
               {product.attributes.title}
             </h2>
             {product.attributes.category && (
-              <h2 className="text-[12px] text-gray-400 flex gap-2">
+              <h2 className="text-[12px] text-b flex gap-2">
                 <SquareChevronRight className="h-4 w-4" />
                 {product.attributes.category}
               </h2>

@@ -1,61 +1,117 @@
-# 🚀 Getting started with Strapi
+# THEFT Backend
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+This is the backend CMS for **THEFT**, a premium thrift store e-commerce platform built with Strapi.
 
-### `develop`
+## About THEFT
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+THEFT is a curated thrift store that offers sustainable fashion choices for conscious consumers. Our platform connects fashion enthusiasts with unique, pre-loved pieces that tell stories and reduce environmental impact.
 
+## Features
+
+- **Content Management**: Full-featured CMS for managing products, categories, and content
+- **API Management**: RESTful API for frontend integration
+- **Media Management**: Upload and manage product images
+- **User Management**: Admin user management
+- **Database**: PostgreSQL integration
+- **File Upload**: Cloudinary integration for media storage
+
+## Tech Stack
+
+- **CMS**: Strapi 5.x
+- **Database**: PostgreSQL (or SQLite for local dev)
+- **File Storage**: Cloudinary
+- **Node.js**: v18+ (v18–20 recommended)
+- **Package Manager**: npm/yarn
+
+## Getting Started
+
+1. Install dependencies: `npm install --legacy-peer-deps` (use `--legacy-peer-deps` if you hit peer dependency conflicts)
+2. Set up environment variables (see `.env` example)
+3. Run development server: `npm run develop`
+4. Access admin panel at [http://localhost:1337/admin](http://localhost:1337/admin)
+
+## Reset admin password (forgotten credentials)
+
+If you forgot your Strapi admin login:
+
+1. **If you remember the admin email** – from the project root run:
+   ```bash
+   npx strapi admin:reset-user-password --email=your@email.com --password=YourNewPassword
+   ```
+   Or with yarn (recommended for interactive prompts):
+   ```bash
+   yarn strapi admin:reset-user-password --email=your@email.com --password=YourNewPassword
+   ```
+
+2. **If you don’t remember the email** – open Strapi’s console and list admin emails:
+   ```bash
+   npx strapi console
+   ```
+   In the REPL, run:
+   ```js
+   const users = await strapi.db.query('admin::user').findMany({ fields: ['email', 'firstname', 'lastname'] });
+   console.log(users);
+   ```
+   Then exit with `Ctrl+C` twice and use one of the emails in the reset command above.
+
+## Environment Variables
+
+Create a `.env` file with:
+
+```env
+# Database
+DATABASE_CLIENT=postgres
+DATABASE_URL=your_database_url
+DATABASE_HOST=your_database_host
+DATABASE_PORT=5432
+DATABASE_NAME=your_database_name
+DATABASE_USERNAME=your_database_username
+DATABASE_PASSWORD=your_database_password
+
+# Strapi Admin
+ADMIN_JWT_SECRET=your_admin_jwt_secret
+API_TOKEN_SALT=your_api_token_salt
+TRANSFER_TOKEN_SALT=your_transfer_token_salt
+APP_KEYS=key1,key2
+
+# Server
+HOST=0.0.0.0
+PORT=1337
+
+# Production: comma-separated frontend URLs allowed for CORS (e.g. https://your-app.vercel.app)
+# CORS_ORIGIN=https://your-app.vercel.app
 ```
-npm run develop
-# or
-yarn develop
-```
 
-### `start`
+## Content Types
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+The CMS includes the following content types:
 
-```
-npm run start
-# or
-yarn start
-```
+- **Products**: Thrift store items with images, descriptions, and pricing
+- **Categories**: Product categorization
+- **Orders**: Customer order management
+- **Comments**: Product reviews and feedback
+- **Carts**: Shopping cart management
 
-### `build`
+## API Endpoints
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+- `/api/products` - Product management
+- `/api/categories` - Category management
+- `/api/orders` - Order management
+- `/api/comments` - Comment management
+- `/api/carts` - Cart management
 
-```
-npm run build
-# or
-yarn build
-```
+## Strapi 5 upgrade notes
 
-## ⚙️ Deployment
+- **i18n**: The `@strapi/plugin-i18n` package was removed; i18n is now built into Strapi 5.
+- **REST response format**: Strapi 5 uses a new flattened response format. The Next.js frontend sends the `Strapi-Response-Format: v4` header so the API still returns the v4 shape (`data.attributes`). You can remove this header once the frontend is updated to the new format.
+- **Install**: If `npm install` fails with peer dependency errors, run `npm install --legacy-peer-deps`.
+- **Node**: Strapi 5 supports Node 18+. If you use Node 22, you may see engine warnings; the app should still run.
+- **Build**: If `npm run build` fails with "JavaScript heap out of memory", the build script increases Node's memory limit. You can also run `set NODE_OPTIONS=--max-old-space-size=4096` (Windows) or `export NODE_OPTIONS=--max-old-space-size=4096` (Mac/Linux) before building.
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+## Contributing
 
-```
-yarn strapi deploy
-```
-
-## 📚 Learn more
-
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
-
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+We welcome contributions! Please read our contributing guidelines before submitting pull requests.
 
 ---
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+**THEFT** - Sustainable fashion for the conscious consumer.

@@ -1,64 +1,89 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'sqlite');
+  const client = env("DATABASE_CLIENT", "sqlite");
 
   const connections = {
     mysql: {
       connection: {
-        connectionString: env('DATABASE_URL'),
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
-        database: env('DATABASE_NAME', 'strapi'),
-        user: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
-        ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
-          cipher: env('DATABASE_SSL_CIPHER', undefined),
-          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
+        connectionString: env("DATABASE_URL"),
+        host: env("DATABASE_HOST", "localhost"),
+        port: env.int("DATABASE_PORT", 3306),
+        database: env("DATABASE_NAME", "strapi"),
+        user: env("DATABASE_USERNAME", "strapi"),
+        password: env("DATABASE_PASSWORD", "strapi"),
+        ssl: env.bool("DATABASE_SSL", false) && {
+          key: env("DATABASE_SSL_KEY", undefined),
+          cert: env("DATABASE_SSL_CERT", undefined),
+          ca: env("DATABASE_SSL_CA", undefined),
+          capath: env("DATABASE_SSL_CAPATH", undefined),
+          cipher: env("DATABASE_SSL_CIPHER", undefined),
+          rejectUnauthorized: env.bool(
+            "DATABASE_SSL_REJECT_UNAUTHORIZED",
+            true
+          ),
         },
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {
+        min: env.int("DATABASE_POOL_MIN", 2),
+        max: env.int("DATABASE_POOL_MAX", 10),
+      },
     },
     mysql2: {
       connection: {
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
-        database: env('DATABASE_NAME', 'strapi'),
-        user: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
-        ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
-          cipher: env('DATABASE_SSL_CIPHER', undefined),
-          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
+        host: env("DATABASE_HOST", "localhost"),
+        port: env.int("DATABASE_PORT", 3306),
+        database: env("DATABASE_NAME", "strapi"),
+        user: env("DATABASE_USERNAME", "strapi"),
+        password: env("DATABASE_PASSWORD", "strapi"),
+        ssl: env.bool("DATABASE_SSL", false) && {
+          key: env("DATABASE_SSL_KEY", undefined),
+          cert: env("DATABASE_SSL_CERT", undefined),
+          ca: env("DATABASE_SSL_CA", undefined),
+          capath: env("DATABASE_SSL_CAPATH", undefined),
+          cipher: env("DATABASE_SSL_CIPHER", undefined),
+          rejectUnauthorized: env.bool(
+            "DATABASE_SSL_REJECT_UNAUTHORIZED",
+            true
+          ),
         },
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {
+        min: env.int("DATABASE_POOL_MIN", 2),
+        max: env.int("DATABASE_POOL_MAX", 10),
+      },
     },
     postgres: {
       connection: {
-        connectionString: env('DATABASE_URL', 'postgres://urbankicksDB_owner:KpusAZ6j7STf@ep-frosty-rain-a5h9if13.us-east-2.aws.neon.tech/urbankicksDB?sslmode=require'),
-        host: env('DATABASE_HOST', 'ep-frosty-rain-a5h9if13.us-east-2.aws.neon.tech'), 
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'urbankicksDB'), 
-        user: env('DATABASE_USERNAME', 'urbankicksDB_owner'), 
-        password: env('DATABASE_PASSWORD', 'KpusAZ6j7STf'), 
+        connectionString: env(
+          "DATABASE_URL",
+          "postgres://theftDB_owner:KpusAZ6j7STf@ep-frosty-rain-a5h9if13.us-east-2.aws.neon.tech/theftDB?sslmode=require"
+        ),
+        host: env(
+          "DATABASE_HOST",
+          "ep-frosty-rain-a5h9if13.us-east-2.aws.neon.tech"
+        ),
+        port: env.int("DATABASE_PORT", 5432),
+        database: env("DATABASE_NAME", "theftDB"),
+        user: env("DATABASE_USERNAME", "theftDB_owner"),
+        password: env("DATABASE_PASSWORD", "KpusAZ6j7STf"),
         ssl: {
           rejectUnauthorized: true,
         },
-        schema: env('DATABASE_SCHEMA', 'public'),
+        schema: env("DATABASE_SCHEMA", "public"),
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {
+        min: env.int("DATABASE_POOL_MIN", 2),
+        max: env.int("DATABASE_POOL_MAX", 10),
+      },
     },
     sqlite: {
       connection: {
-        filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+        filename: path.join(
+          __dirname,
+          "..",
+          env("DATABASE_FILENAME", ".tmp/data.db")
+        ),
       },
       useNullAsDefault: true,
     },
@@ -68,7 +93,7 @@ module.exports = ({ env }) => {
     connection: {
       client,
       ...connections[client],
-      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+      acquireConnectionTimeout: env.int("DATABASE_CONNECTION_TIMEOUT", 60000),
     },
   };
 };

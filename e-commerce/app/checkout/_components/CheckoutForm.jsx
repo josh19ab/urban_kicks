@@ -51,7 +51,7 @@ function CheckoutForm({ amount }) {
       clientSecret,
       elements,
       confirmParams: {
-        return_url: "https://urbankicks.vercel.app/payment-confirm",
+        return_url: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/payment-confirm`,
       },
     });
 

@@ -15,7 +15,6 @@ function DarkMode() {
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
-      console.log("Dark mode toggled:", newMode); // Log the new mode
       if (newMode) {
         document.body.classList.add("dark");
       } else {
@@ -30,7 +29,7 @@ function DarkMode() {
     <label
       htmlFor="AcceptConditions"
       className={`relative inline-block h-6 w-10 cursor-pointer rounded-full ${
-        darkMode ? "bg-primary" : "bg-gray-300"
+        darkMode ? "bg-quaternary" : "bg-gray-300"
       } transition [-webkit-tap-highlight-color:_transparent]`}
       onClick={toggleDarkMode}
     >

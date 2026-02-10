@@ -1,40 +1,42 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
+import { useParams, usePathname } from "next/navigation";
+import { CartContext } from "../../_context/CartContext";
 import ProjectBanner from "./_components/ProjectBanner";
 import ProjectInfo from "./_components/ProjectInfo";
-import { usePathname } from "next/navigation";
 import GlobalApi from "../../_utils/GlobalApi";
 import ProductList from "../../_components/ProductList";
-import { CartContext } from "../../_context/CartContext";
 import Breadcrumb from "../../_components/Breadcrumb";
 import SkeletalProductList from "../../_components/SkeletalProductsList";
 import CommentBox from "./_components/CommentBox";
 import CommentList from "./_components/CommentsList";
 
-function ProductDetails({ params }) {
+function ProductDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [productDetail, setProductDetails] = useState();
   const [productList, setProductList] = useState([]);
   const path = usePathname();
   const { toggleCart } = useContext(CartContext);
-  const productId = path.split("/")[2];
   const [shouldRefresh, setShouldRefresh] = useState(false);
-  
+
+  // Use useParams hook instead of params prop
+  const params = useParams();
+  const productId = params?.productId;
 
   const handleRefresh = () => {
     setShouldRefresh(!shouldRefresh);
   };
 
   useEffect(() => {
-    if (params?.productId) {
+    if (productId) {
       getProductById();
     }
-  }, [params?.productId]);
+  }, [productId]);
 
   const getProductById = async () => {
     try {
-      const resp = await GlobalApi.getProductsById(params?.productId);
+      const resp = await GlobalApi.getProductsById(productId);
       setProductDetails(resp.data.data);
       getProductListByCategory(resp.data.data);
     } catch (error) {
@@ -62,7 +64,7 @@ function ProductDetails({ params }) {
         <ProjectBanner product={productDetail} />
         <ProjectInfo product={productDetail} toggleCart={toggleCart} />
       </div>
-      <div >
+      <div>
         <h2 className="mt-20 font-medium text-[20px] mb-4">Similar Products</h2>
         {isLoading ? (
           <SkeletalProductList />
@@ -77,7 +79,7 @@ function ProductDetails({ params }) {
         )}
       </div>
       <div className="mt-20">
-        <CommentList productId={productId} onRefresh={shouldRefresh}/>
+        <CommentList productId={productId} onRefresh={shouldRefresh} />
       </div>
       <div className="flex justify-around">
         <CommentBox onRefresh={handleRefresh} productId={productId} />
