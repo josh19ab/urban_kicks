@@ -78,8 +78,10 @@ APP_KEYS=key1,key2
 HOST=0.0.0.0
 PORT=1337
 
-# Production: comma-separated frontend URLs allowed for CORS (e.g. https://your-app.vercel.app)
-# CORS_ORIGIN=https://your-app.vercel.app
+# Production: comma-separated frontend URLs allowed for CORS (required when frontend is on another domain)
+# Example for frontend at https://theftstoreapp.vercel.app:
+# CORS_ORIGIN=https://theftstoreapp.vercel.app
+# Multiple origins: CORS_ORIGIN=https://theftstoreapp.vercel.app,https://www.theftstoreapp.vercel.app
 ```
 
 ## Content Types

@@ -34,6 +34,13 @@ module.exports = [
       origin: process.env.CORS_ORIGIN
         ? process.env.CORS_ORIGIN.split(",").map((o) => o.trim())
         : ["http://localhost:3000"],
+      headers: [
+        "Content-Type",
+        "Authorization",
+        "Origin",
+        "Accept",
+        "Strapi-Response-Format",
+      ],
     },
   },
   "strapi::poweredBy",
